@@ -10,12 +10,10 @@ public class ItemDAO {
     private static SessionFactory sessionFactory;
 
     public void save(Item item) {
-        Session session = null;
         Transaction tr = null;
 
-        try {
+        try(Session session = createSessionFactory().openSession()) {
             //create session/tr
-            session = createSessionFactory().openSession();
             tr = session.getTransaction();
             tr.begin();
 
@@ -30,21 +28,15 @@ public class ItemDAO {
 
             if (tr != null)
                 tr.rollback();
-        } finally {
-            if (session != null)
-                session.close();
         }
-
         System.out.println("Save is done");
     }
 
     public void update(Item item) {
-        Session session = null;
         Transaction tr = null;
 
-        try {
+        try(Session session = createSessionFactory().openSession();) {
             //create session/tr
-            session = createSessionFactory().openSession();
             tr = session.getTransaction();
             tr.begin();
 
@@ -59,21 +51,15 @@ public class ItemDAO {
 
             if (tr != null)
                 tr.rollback();
-        } finally {
-            if (session != null)
-                session.close();
         }
-
         System.out.println("Update is done");
     }
 
     public void delete(long itemId) {
-        Session session = null;
         Transaction tr = null;
 
-        try {
+        try(Session session = createSessionFactory().openSession();) {
             //create session/tr
-            session = createSessionFactory().openSession();
             tr = session.getTransaction();
             tr.begin();
 
@@ -88,22 +74,17 @@ public class ItemDAO {
 
             if (tr != null)
                 tr.rollback();
-        } finally {
-            if (session != null)
-                session.close();
         }
-
         System.out.println("Delete is done");
     }
 
     public Item findById(long id) {
-        Session session = null;
         Transaction tr = null;
         Item item = null;
 
-        try {
+        try(Session session = createSessionFactory().openSession()) {
             //create session/tr
-            session = createSessionFactory().openSession();
+
             tr = session.getTransaction();
             tr.begin();
 
@@ -118,11 +99,7 @@ public class ItemDAO {
 
             if (tr != null)
                 tr.rollback();
-        } finally {
-            if (session != null)
-                session.close();
         }
-
         System.out.println("Read is done");
 
         return item;

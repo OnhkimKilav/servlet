@@ -38,10 +38,12 @@ public class ItemController extends HttpServlet {
     }
 
     private Item readValuesPostman(HttpServletRequest req) throws IOException {
-        BufferedReader reader = req.getReader();
-        Gson gson = new Gson();
-        Item item = gson.fromJson(reader, Item.class);
-        itemService.save(item);
+        Item item;
+        try(BufferedReader reader = req.getReader()) {
+            Gson gson = new Gson();
+            item = gson.fromJson(reader, Item.class);
+            itemService.save(item);
+        }
         return item;
     }
 
